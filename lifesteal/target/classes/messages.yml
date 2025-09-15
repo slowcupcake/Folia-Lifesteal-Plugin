@@ -1,0 +1,63 @@
+# Lifesteal Plugin Messages
+# Use & for color codes
+# Available placeholders: {player}, {killer}, {victim}, {amount}, {hearts}, {time}
+
+# Prefix for all messages
+prefix: "&8[&cLifesteal&8] &r"
+
+messages:
+  # Permission Messages
+  no-permission: "&cYou don't have permission to use this command!"
+  
+  # General Messages
+  player-not-found: "&cPlayer not found!"
+  config-reloaded: "&aConfiguration has been reloaded!"
+  
+  # Heart Messages
+  heart-lost: "&cYou lost &4{amount} &cheart(s) to &6{killer}&c! You now have &4{hearts} &cheart(s)."
+  heart-gained: "&aYou gained &c{amount} &aheart(s) from killing &6{victim}&a! You now have &c{hearts} &aheart(s)."
+  hearts-updated: "&aYour hearts have been updated! You now have &c{hearts}&a."
+  
+  # Elimination Messages
+  player-eliminated: "&c&l{player} has been eliminated from the server! &8(0 hearts remaining)"
+  
+  # Heart Items
+  heart-withdrawn: "&aYou successfully withdrew a heart item!"
+  heart-consumed: "&aYou consumed a heart! You now have &c{hearts}&a."
+  received-heart-items: "&aYou received &c{amount} &aheart item(s)!"
+  
+  # Withdraw Command
+  withdraw-disabled: "&cWithdraw is currently disabled!"
+  withdraw-cooldown: "&cYou must wait &e{time} &cbefore withdrawing another heart!"
+  not-enough-hearts: "&cYou need at least 3 hearts to withdraw one!"
+  inventory-full: "&cYour inventory is full! Make some space first."
+  
+  # Heart Items
+  heart-items-disabled: "&cHeart items are currently disabled!"
+  max-hearts-reached: "&cYou already have the maximum number of hearts!"
+  
+  # Combat Messages
+  pvp-disabled-world: "&cPvP lifesteal is disabled in this world!"
+  bypass-enabled: "&7You have lifesteal bypass enabled."
+  
+  # Stats Messages
+  stats-header: "&8&m----&r &cLifesteal Stats &8&m----&r"
+  stats-hearts: "&cHearts: &f{hearts}"
+  stats-kills: "&eKills: &f{kills}"
+  stats-deaths: "&cDeaths: &f{deaths}"
+  stats-kdr: "&aK/D Ratio: &f{kdr}"
+  
+  # Admin Messages
+  hearts-set: "&aSet &6{player}'s &ahearts to &c{hearts}&a."
+  hearts-added: "&aAdded &c{amount} &ahearts to &6{player}&a."
+  hearts-removed: "&aRemoved &c{amount} &ahearts from &6{player}&a."
+  
+  # Error Messages
+  invalid-number: "&cInvalid number: &e{input}"
+  player-offline: "&cPlayer &6{player} &cis not online!"
+  command-error: "&cAn error occurred while executing the command!"
+  
+  # Informational Messages
+  hearts-remaining: "&7You have &c{hearts} &7heart(s) remaining."
+  elimination-warning: "&c&lWARNING: &cYou only have &4{hearts} &cheart(s) left!"
+  low-hearts-warning: "&6⚠ &eWarning: You're running low on hearts! &6⚠"

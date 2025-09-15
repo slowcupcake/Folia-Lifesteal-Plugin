@@ -1,0 +1,61 @@
+# Lifesteal Plugin Configuration
+# Plugin by SqueakyBagCo
+
+# Heart Settings
+hearts:
+  # Default hearts for new players (20 = 10 full hearts)
+  default: 20
+  
+  # Maximum hearts a player can have
+  max: 40
+  
+  # Minimum hearts a player can have (they get eliminated at 0)
+  min: 2
+  
+  # Hearts gained/lost per kill/death
+  per-kill: 2
+
+# World Settings
+# Leave empty to enable in all worlds
+enabled-worlds: []
+#  - "world"
+#  - "world_nether"
+
+# Elimination Settings
+elimination:
+  # Enable elimination when players reach 0 hearts
+  enabled: true
+  
+  # Ban the player when eliminated
+  ban-player: false
+  
+  # Commands to run when a player is eliminated
+  # Use {player} as placeholder for player name
+  commands:
+    - "broadcast &c{player} has been eliminated from the lifesteal server!"
+    - "gamemode spectator {player}"
+
+# Heart Items
+heart-items:
+  # Enable heart items (can be consumed to gain hearts)
+  enabled: true
+  
+  # Enable withdraw command (convert hearts to items)
+  withdraw-enabled: true
+  
+  # Withdraw cooldown in seconds (300 = 5 minutes)
+  withdraw-cooldown: 300
+
+# General Settings
+# Enable debug messages in console
+debug: false
+
+# Database Settings (for future MySQL support)
+database:
+  type: "file" # file or mysql
+  mysql:
+    host: "localhost"
+    port: 3306
+    database: "lifesteal"
+    username: "root"
+    password: ""

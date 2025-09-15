@@ -1,0 +1,44 @@
+name: LifestealPlugin
+version: '1.0-SNAPSHOT'
+main: com.yourname.lifesteal.LifestealPlugin
+api-version: '1.21.+'
+folia-supported: true
+author: SqueakyBagCo
+description: A lifesteal plugin for Folia servers
+website: https://squeakybagco.com
+
+commands:
+  lifesteal:
+    description: Main lifesteal command
+    usage: /lifesteal <subcommand>
+    aliases: [ls]
+    permission: lifesteal.admin
+  hearts:
+    description: Manage player hearts
+    usage: /hearts <player> [amount]
+    permission: lifesteal.hearts
+  withdraw:
+    description: Withdraw a heart item
+    usage: /withdraw
+    permission: lifesteal.withdraw
+
+permissions:
+  lifesteal.*:
+    description: All lifesteal permissions
+    children:
+      lifesteal.admin: true
+      lifesteal.hearts: true
+      lifesteal.withdraw: true
+      lifesteal.bypass: true
+  lifesteal.admin:
+    description: Admin commands
+    default: op
+  lifesteal.hearts:
+    description: Manage hearts
+    default: op
+  lifesteal.withdraw:
+    description: Withdraw hearts as items
+    default: true
+  lifesteal.bypass:
+    description: Bypass heart loss
+    default: false
