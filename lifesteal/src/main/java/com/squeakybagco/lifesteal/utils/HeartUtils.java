@@ -46,15 +46,15 @@ public class HeartUtils {
         ItemMeta meta = heart.getItemMeta();
         
         if (meta != null) {
-            meta.setDisplayName("§c❤ Heart §c❤");
+            meta.displayName(net.kyori.adventure.text.Component.text("§c❤ Heart §c❤"));
             
-            List<String> lore = Arrays.asList(
-                "§7Right-click to consume",
-                "§7and gain §c" + (amount / 2.0) + " §7heart" + (amount == 2 ? "" : "s"),
-                "",
-                "§8Lifesteal Heart Item"
+            List<net.kyori.adventure.text.Component> lore = Arrays.asList(
+                net.kyori.adventure.text.Component.text("§7Right-click to consume"),
+                net.kyori.adventure.text.Component.text("§7and gain §c" + (amount / 2.0) + " §7heart" + (amount == 2 ? "" : "s")),
+                net.kyori.adventure.text.Component.text(""),
+                net.kyori.adventure.text.Component.text("§8Lifesteal Heart Item")
             );
-            meta.setLore(lore);
+            meta.lore(lore);
             
             // Add enchantment glint
             meta.addEnchant(Enchantment.UNBREAKING, 1, true);
@@ -81,7 +81,13 @@ public class HeartUtils {
             return false;
         }
         
-        return meta.getDisplayName().equals("§c❤ Heart §c❤");
+        // Use Adventure Component API to compare display names (for modern Bukkit/Spigot)
+        if (meta.hasDisplayName() && meta.displayName() != null) {
+            // Compare legacy text to component
+            net.kyori.adventure.text.Component expected = net.kyori.adventure.text.Component.text("§c❤ Heart §c❤");
+            return meta.displayName().equals(expected);
+        }
+        return false;
     }
     
     /**

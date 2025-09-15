@@ -3,6 +3,9 @@ package com.squeakybagco.lifesteal.listeners;
 import com.squeakybagco.lifesteal.LifestealPlugin;
 import com.squeakybagco.lifesteal.managers.PlayerDataManager;
 import com.squeakybagco.lifesteal.utils.HeartUtils;
+
+import net.kyori.adventure.text.Component;
+
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -129,8 +132,9 @@ public class CombatListener implements Listener {
             String eliminationMessage = plugin.getConfigManager().getMessage("player-eliminated")
                 .replace("{player}", player.getName());
             
-            // Broadcast elimination message
-            plugin.getServer().broadcastMessage(eliminationMessage);
+            // Broadcast elimination message using Adventure API
+            Component messageComponent = Component.text(eliminationMessage);
+            plugin.getServer().broadcast(messageComponent);
             
             // Execute elimination commands
             for (String command : plugin.getConfigManager().getEliminationCommands()) {
@@ -138,9 +142,11 @@ public class CombatListener implements Listener {
                 plugin.getServer().dispatchCommand(plugin.getServer().getConsoleSender(), processedCommand);
             }
             
-            // Ban the player if configured
+            // Ban the player if configured (using /ban command)
             if (plugin.getConfigManager().isBanOnElimination()) {
-                player.banPlayer("You have been eliminated from the lifesteal server!");
+                String banReason = "You have been eliminated from the lifesteal server!";
+                String banCommand = "ban " + player.getName() + " " + banReason;
+                plugin.getServer().dispatchCommand(plugin.getServer().getConsoleSender(), banCommand);
             }
         }, 20L); // 1 second delay
     }
