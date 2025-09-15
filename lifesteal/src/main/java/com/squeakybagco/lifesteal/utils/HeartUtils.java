@@ -42,28 +42,7 @@ public class HeartUtils {
      * @return ItemStack representing the heart item
      */
     public static ItemStack createHeartItem(int amount) {
-        ItemStack heart = new ItemStack(Material.NETHER_STAR, 1);
-        ItemMeta meta = heart.getItemMeta();
-        
-        if (meta != null) {
-            meta.displayName(net.kyori.adventure.text.Component.text("§c❤ Heart §c❤"));
-            
-            List<net.kyori.adventure.text.Component> lore = Arrays.asList(
-                net.kyori.adventure.text.Component.text("§7Right-click to consume"),
-                net.kyori.adventure.text.Component.text("§7and gain §c" + (amount / 2.0) + " §7heart" + (amount == 2 ? "" : "s")),
-                net.kyori.adventure.text.Component.text(""),
-                net.kyori.adventure.text.Component.text("§8Lifesteal Heart Item")
-            );
-            meta.lore(lore);
-            
-            // Add enchantment glint
-            meta.addEnchant(Enchantment.UNBREAKING, 1, true);
-            meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
-            
-            heart.setItemMeta(meta);
-        }
-        
-        return heart;
+        return plugin.getCustomHeartManager().createHeartItem(amount);
     }
     
     /**
@@ -72,22 +51,7 @@ public class HeartUtils {
      * @return true if it's a heart item
      */
     public static boolean isHeartItem(ItemStack item) {
-        if (item == null || item.getType() != Material.NETHER_STAR || !item.hasItemMeta()) {
-            return false;
-        }
-        
-        ItemMeta meta = item.getItemMeta();
-        if (meta == null || !meta.hasDisplayName()) {
-            return false;
-        }
-        
-        // Use Adventure Component API to compare display names (for modern Bukkit/Spigot)
-        if (meta.hasDisplayName() && meta.displayName() != null) {
-            // Compare legacy text to component
-            net.kyori.adventure.text.Component expected = net.kyori.adventure.text.Component.text("§c❤ Heart §c❤");
-            return meta.displayName().equals(expected);
-        }
-        return false;
+        return plugin.getCustomHeartManager().isCustomHeartItem(item);
     }
     
     /**
@@ -96,12 +60,7 @@ public class HeartUtils {
      * @return Number of half-hearts this item provides
      */
     public static int getHeartValue(ItemStack item) {
-        if (!isHeartItem(item)) {
-            return 0;
-        }
-        
-        // Default heart value is 2 half-hearts (1 full heart)
-        return 2;
+        return plugin.getCustomHeartManager().getHeartValue(item);
     }
     
     /**

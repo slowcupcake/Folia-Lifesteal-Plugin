@@ -45,6 +45,41 @@ heart-items:
   
   # Withdraw cooldown in seconds (300 = 5 minutes)
   withdraw-cooldown: 300
+  
+  # Custom Heart Item Settings
+  custom:
+    # Base material for the heart item (any valid Material)
+    # Popular choices: PAPER, NETHER_STAR, GOLDEN_APPLE, TOTEM_OF_UNDYING
+    base-material: "PAPER"
+    
+    # Custom name for heart items (supports color codes)
+    name: "&c❤ &lLifesteal Heart &c❤"
+    
+    # Custom lore (supports color codes and {hearts} placeholder)
+    lore:
+      - "&7Right-click to consume"
+      - "&7and gain &c{hearts} &7heart(s)"
+      - ""
+      - "&6⚠ &eThis item is precious! &6⚠"
+      - "&8Lifesteal Heart"
+    
+    # Custom model data for resource pack support (0 = disabled)
+    custom-model-data: 0
+    
+    # Enable enchantment glow effect
+    glow-effect: true
+    
+    # Enable custom crafting recipe
+    crafting-enabled: true
+    
+    # Crafting pattern (3x3 grid)
+    # Available letters: G=Gold Block, D=Diamond, R=Redstone Block, 
+    #                   N=Nether Star, E=Emerald Block, B=Beacon, 
+    #                   T=Totem, H=Golden Apple
+    crafting-pattern:
+      - "GDG"
+      - "DHD" 
+      - "GDG"
 
 # General Settings
 # Enable debug messages in console
