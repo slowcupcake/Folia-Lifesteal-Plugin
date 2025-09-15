@@ -1,6 +1,6 @@
 # LifeSteal Plugin (Folia-Compatible)
 
-A simple Minecraft plugin that allows players to **steal health** from other players on PvP kills. Fully compatible with **Folia**.
+A simple Minecraft plugin that allows players to **steal health** from other players on PvP kills. Fully compatible with **Folia**. Warning this was made in about ten minutes and is about 98% vibe coded so alot of it is not tested but feel free to try and fix it.
 
 ## Features
 
@@ -39,7 +39,7 @@ msg-gained: "You stole {amount} hearts!"
 
 ## Development
 
-- Java 17+ recommended.
+- Java 24+ recommended.
 - Built with Maven.
 - Follows Folia’s threading model for compatibility.
 
