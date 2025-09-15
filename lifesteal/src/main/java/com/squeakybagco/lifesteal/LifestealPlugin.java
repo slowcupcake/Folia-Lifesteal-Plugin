@@ -23,6 +23,7 @@ public class LifestealPlugin extends JavaPlugin {
         this.configManager = new ConfigManager(this);
         this.playerDataManager = new PlayerDataManager(this);
 
+        scheduleGlobalTask(() -> {
         // Initialize and register custom heart manager
         this.customHeartManager = new CustomHeartManager(this);
         if (configManager.isCustomCraftingEnabled()) {
@@ -41,7 +42,8 @@ public class LifestealPlugin extends JavaPlugin {
         // Register heart item interaction listener
         getServer().getPluginManager().registerEvents(heartCommand, this);
         getLogger().info("LifestealPlugin has been enabled!");
-        
+        }); // End of scheduleGlobalTask
+
         // Check if running on Folia
         if (isFolia()) {
             getLogger().info("Detected Folia server - using region-based scheduling");
@@ -114,6 +116,50 @@ public class LifestealPlugin extends JavaPlugin {
             getServer().getRegionScheduler().runDelayed(this, location, scheduledTask -> task.run(), delay);
         } else {
             getServer().getScheduler().runTaskLater(this, task, delay);
+        }
+    }
+
+    /**
+    * Schedule a task for a specific entity (player, mob, etc.)
+    */
+    public void scheduleEntityTask(org.bukkit.entity.Entity entity, Runnable task) {
+        if (isFolia()) {
+            entity.getScheduler().run(this, scheduledTask -> task.run(), null);
+        } else {
+            getServer().getScheduler().runTask(this, task);
+        }
+    }
+
+    /**
+    * Schedule a global task (not tied to specific region)
+    */
+    public void scheduleGlobalTask(Runnable task) {
+        if (isFolia()) {
+            getServer().getGlobalRegionScheduler().run(this, scheduledTask -> task.run());
+        } else {
+            getServer().getScheduler().runTask(this, task);
+        }
+    }
+
+    /**
+    * Schedule a delayed global task
+    */
+    public void scheduleGlobalTaskLater(Runnable task, long delay) {
+        if (isFolia()) {
+            getServer().getGlobalRegionScheduler().runDelayed(this, scheduledTask -> task.run(), delay);
+        } else {
+            getServer().getScheduler().runTaskLater(this, task, delay);
+        }
+    }
+
+    /**
+    * Schedule async task (same for both)
+    */
+    public void scheduleAsyncTask(Runnable task) {
+        if (isFolia()) {
+            getServer().getAsyncScheduler().runNow(this, scheduledTask -> task.run());
+        } else {
+            getServer().getScheduler().runTaskAsynchronously(this, task);
         }
     }
 }

@@ -1,7 +1,6 @@
 package com.squeakybagco.lifesteal.managers;
 
 import com.squeakybagco.lifesteal.LifestealPlugin;
-
 import net.kyori.adventure.text.TextComponent;
 
 import org.bukkit.Material;
@@ -25,32 +24,29 @@ public class CustomHeartManager {
     }
     
     public void registerRecipes() {
-        // Remove existing recipe if it exists
-        plugin.getServer().removeRecipe(recipeKey);
-        
-        // Create the heart item
-        ItemStack heartItem = createCustomHeartItem();
-        
-        // Create shaped recipe
-        ShapedRecipe recipe = new ShapedRecipe(recipeKey, heartItem);
-        
-        // Define the crafting pattern (configurable in config.yml)
-        String[] pattern = plugin.getConfigManager().getCraftingPattern();
-        recipe.shape(pattern[0], pattern[1], pattern[2]);
-        
-        // Set the ingredients (also configurable
-        recipe.setIngredient('G', Material.GOLD_BLOCK);
-        recipe.setIngredient('D', Material.DIAMOND);
-        recipe.setIngredient('R', Material.REDSTONE_BLOCK);
-        recipe.setIngredient('N', Material.NETHER_STAR);
-        recipe.setIngredient('B', Material.BEACON);
-        recipe.setIngredient('T', Material.TOTEM_OF_UNDYING);
-        recipe.setIngredient('H', Material.GOLDEN_APPLE);
-        recipe.setIngredient('E', Material.ENCHANTED_GOLDEN_APPLE);
-        
-        // Register the recipe
-        plugin.getServer().addRecipe(recipe);
-        plugin.getLogger().info("Registered custom heart crafting recipe!");
+            // Run on main server thread to avoid concurrency issues
+            plugin.scheduleGlobalTask(() -> {
+            // Remove existing recipe if it exists
+            plugin.getServer().removeRecipe(recipeKey);
+
+            // Create the heart item
+            ItemStack heartItem = createCustomHeartItem();
+
+            // Create shaped recipe
+            ShapedRecipe recipe = new ShapedRecipe(recipeKey, heartItem);
+
+            // Define the crafting pattern (configurable in config.yml)
+            String[] pattern = plugin.getConfigManager().getCraftingPattern();
+            recipe.shape(pattern[0], pattern[1], pattern[2]);
+
+            // Set the ingredients
+            recipe.setIngredient('R', Material.REDSTONE_BLOCK);
+            recipe.setIngredient('E', Material.ENCHANTED_GOLDEN_APPLE);
+
+            // Register the recipe
+            plugin.getServer().addRecipe(recipe);
+            plugin.getLogger().info("Registered custom heart crafting recipe!");
+        });
     }
     
     /**

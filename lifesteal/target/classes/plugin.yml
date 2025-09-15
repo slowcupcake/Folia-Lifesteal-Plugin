@@ -1,7 +1,7 @@
 name: LifestealPlugin
 version: '1.0-SNAPSHOT'
-main: com.yourname.lifesteal.LifestealPlugin
-api-version: '1.21.+'
+main: com.squeakybagco.lifesteal.LifestealPlugin
+api-version: '1.21'
 folia-supported: true
 author: SqueakyBagCo
 description: A lifesteal plugin for Folia servers

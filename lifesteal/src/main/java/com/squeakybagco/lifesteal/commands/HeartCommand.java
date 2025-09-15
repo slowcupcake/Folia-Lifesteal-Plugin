@@ -172,40 +172,42 @@ public class HeartCommand implements CommandExecutor, TabCompleter, Listener {
         
         event.setCancelled(true);
         
-        if (!plugin.getConfigManager().isHeartItemsEnabled()) {
+        plugin.scheduleEntityTask(player, () -> {
+            if (!plugin.getConfigManager().isHeartItemsEnabled()) {
+                player.sendMessage(plugin.getConfigManager().getPrefix() + 
+                    plugin.getConfigManager().getMessage("heart-items-disabled", "§cHeart items are disabled!"));
+                return;
+            }
+        
+            UUID playerId = player.getUniqueId();
+            int currentHearts = plugin.getPlayerDataManager().getPlayerHearts(playerId);
+            int maxHearts = plugin.getConfigManager().getMaxHearts();
+        
+            if (currentHearts >= maxHearts) {
+                player.sendMessage(plugin.getConfigManager().getPrefix() + 
+                    plugin.getConfigManager().getMessage("max-hearts-reached", "§cYou already have maximum hearts!"));
+                return;
+            }
+        
+            int heartValue = HeartUtils.getHeartValue(item);
+            int newHearts = Math.min(currentHearts + heartValue, maxHearts);
+        
+            // Update player data and health
+            plugin.getPlayerDataManager().setPlayerHearts(playerId, newHearts);
+            HeartUtils.updatePlayerMaxHealth(player, newHearts);
+        
+            // Remove the item
+            item.setAmount(item.getAmount() - 1);
+        
+            // Send message
             player.sendMessage(plugin.getConfigManager().getPrefix() + 
-                plugin.getConfigManager().getMessage("heart-items-disabled", "§cHeart items are disabled!"));
-            return;
-        }
+                plugin.getConfigManager().getMessage("heart-consumed")
+                    .replace("{hearts}", HeartUtils.formatHearts(newHearts)));
         
-        UUID playerId = player.getUniqueId();
-        int currentHearts = plugin.getPlayerDataManager().getPlayerHearts(playerId);
-        int maxHearts = plugin.getConfigManager().getMaxHearts();
-        
-        if (currentHearts >= maxHearts) {
-            player.sendMessage(plugin.getConfigManager().getPrefix() + 
-                plugin.getConfigManager().getMessage("max-hearts-reached", "§cYou already have maximum hearts!"));
-            return;
-        }
-        
-        int heartValue = HeartUtils.getHeartValue(item);
-        int newHearts = Math.min(currentHearts + heartValue, maxHearts);
-        
-        // Update player data and health
-        plugin.getPlayerDataManager().setPlayerHearts(playerId, newHearts);
-        HeartUtils.updatePlayerMaxHealth(player, newHearts);
-        
-        // Remove the item
-        item.setAmount(item.getAmount() - 1);
-        
-        // Send message
-        player.sendMessage(plugin.getConfigManager().getPrefix() + 
-            plugin.getConfigManager().getMessage("heart-consumed")
-                .replace("{hearts}", HeartUtils.formatHearts(newHearts)));
-        
-        // Play sound effect
-        player.playSound(player.getLocation(), 
-            org.bukkit.Sound.ENTITY_PLAYER_LEVELUP, 1.0f, 2.0f);
+            // Play sound effect
+            player.playSound(player.getLocation(), 
+                org.bukkit.Sound.ENTITY_PLAYER_LEVELUP, 1.0f, 2.0f);
+            });
     }
     
     @Override
