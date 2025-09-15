@@ -1,14 +1,15 @@
 package com.squeakybagco.lifesteal.managers;
 
 import com.squeakybagco.lifesteal.LifestealPlugin;
+
+import net.kyori.adventure.text.TextComponent;
+
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
-
-import java.util.Arrays;
 import java.util.List;
 
 public class CustomHeartManager {
@@ -66,11 +67,15 @@ public class CustomHeartManager {
         
         // Set custom name with configurable colors
         String heartName = plugin.getConfigManager().getHeartItemName();
-        meta.setDisplayName(heartName);
+        // Use Adventure API for display name to avoid deprecation
+        meta.displayName(net.kyori.adventure.text.Component.text(heartName));
         
         // Set custom lore
         List<String> lore = plugin.getConfigManager().getHeartItemLore();
-        meta.setLore(lore);
+        List<TextComponent> adventureLore = lore.stream()
+            .map(net.kyori.adventure.text.Component::text)
+            .toList();
+        meta.lore(adventureLore);
         
         // Add custom NBT data to make it unique
         meta.getPersistentDataContainer().set(heartItemKey, PersistentDataType.STRING, "lifesteal_heart");
@@ -146,16 +151,18 @@ public class CustomHeartManager {
             meta.getPersistentDataContainer().set(valueKey, PersistentDataType.INTEGER, heartValue);
             
             // Update lore to reflect the value
-            List<String> lore = meta.getLore();
+            List<net.kyori.adventure.text.Component> lore = meta.lore();
             if (lore != null && !lore.isEmpty()) {
                 // Replace heart value in lore
                 for (int i = 0; i < lore.size(); i++) {
-                    String line = lore.get(i);
-                    if (line.contains("{hearts}")) {
-                        lore.set(i, line.replace("{hearts}", String.valueOf(heartValue / 2.0)));
+                    net.kyori.adventure.text.Component line = lore.get(i);
+                    String plain = net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer.plainText().serialize(line);
+                    if (plain.contains("{hearts}")) {
+                        String replaced = plain.replace("{hearts}", String.valueOf(heartValue / 2.0));
+                        lore.set(i, net.kyori.adventure.text.Component.text(replaced));
                     }
                 }
-                meta.setLore(lore);
+                meta.lore(lore);
             }
             
             heart.setItemMeta(meta);
