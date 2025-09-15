@@ -38,15 +38,15 @@ public class CustomHeartManager {
         String[] pattern = plugin.getConfigManager().getCraftingPattern();
         recipe.shape(pattern[0], pattern[1], pattern[2]);
         
-        // Set the ingredients (also configurable)
-        recipe.setIngredient('G', Material.GOLD_BLOCK);        // G = Gold Block
-        recipe.setIngredient('D', Material.DIAMOND);           // D = Diamond  
-        recipe.setIngredient('R', Material.REDSTONE_BLOCK);    // R = Redstone Block
-        recipe.setIngredient('N', Material.NETHER_STAR);       // N = Nether Star
-        recipe.setIngredient('E', Material.EMERALD_BLOCK);     // E = Emerald Block
-        recipe.setIngredient('B', Material.BEACON);            // B = Beacon
-        recipe.setIngredient('T', Material.TOTEM_OF_UNDYING);  // T = Totem
-        recipe.setIngredient('H', Material.GOLDEN_APPLE);      // H = Golden Apple (Heart themed)
+        // Set the ingredients (also configurable
+        recipe.setIngredient('G', Material.GOLD_BLOCK);
+        recipe.setIngredient('D', Material.DIAMOND);
+        recipe.setIngredient('R', Material.REDSTONE_BLOCK);
+        recipe.setIngredient('N', Material.NETHER_STAR);
+        recipe.setIngredient('B', Material.BEACON);
+        recipe.setIngredient('T', Material.TOTEM_OF_UNDYING);
+        recipe.setIngredient('H', Material.GOLDEN_APPLE);
+        recipe.setIngredient('E', Material.ENCHANTED_GOLDEN_APPLE);
         
         // Register the recipe
         plugin.getServer().addRecipe(recipe);

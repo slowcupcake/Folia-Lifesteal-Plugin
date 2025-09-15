@@ -74,12 +74,12 @@ heart-items:
     
     # Crafting pattern (3x3 grid)
     # Available letters: G=Gold Block, D=Diamond, R=Redstone Block, 
-    #                   N=Nether Star, E=Emerald Block, B=Beacon, 
+    #                   N=Nether Star, E=Enchanted Golden Apple, B=Beacon, 
     #                   T=Totem, H=Golden Apple
     crafting-pattern:
-      - "GDG"
-      - "DHD" 
-      - "GDG"
+      - "RRR"
+      - "RER" 
+      - "RRR"
 
 # General Settings
 # Enable debug messages in console
