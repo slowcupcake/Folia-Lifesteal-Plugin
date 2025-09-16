@@ -42,7 +42,3 @@ msg-gained: "You stole {amount} hearts!"
 - Java 24+ recommended.
 - Built with Maven.
 - Follows Folia’s threading model for compatibility.
-
-## License
-
-MIT License
